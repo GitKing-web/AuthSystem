@@ -1,0 +1,69 @@
+const User = require('../models/User');
+const router = require('express').Router();
+const bcrypt = require('bcrypt');
+
+
+
+router.get('/', (req, res) => {
+    res.render('index');
+})
+router.get('/register', (req, res) => {
+    res.render('signup')
+})
+
+router.post('/register', async(req, res) => {
+    try {
+        console.log(req.body);
+    const { username, email, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 13)
+    const newUser = new User({
+        username,
+        email,
+        password: hashedPassword,
+    });
+
+    
+        const saveUser = await newUser.save();
+        req.session.userId = newUser.username;
+        res.status(200).send(saveUser);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Internal Server Error');
+    }
+
+});
+
+router.post('/login', async(req, res) => {
+    console.log(req.body);
+    try {
+        const { username, password } = req.body;
+        const user = await User.findOne({ username })
+        if(!user){
+            res.status(401).send('Invalid Credentials');
+        }
+        const isPasswordCorrect = await bcrypt.compare(password, user.password)
+        if(!isPasswordCorrect){
+            res.status(401).send('Invalid Credentials');
+        }
+        req.session.userId = user.username
+        res.status(200).send('Login Successful');
+        console.log(req.session);
+    } catch (error) {
+        res.status(500).send(error)
+    }
+});
+
+router.post('/logout', (req, res) => {
+    req.session.destroy();
+    res.status(200).send('Logout Successful');
+});
+
+router.get('/dashboard', (req, res) => {
+    if(!req.session.userId){
+        res.status(401).send('Unauthorized...');
+    }
+
+    res.status(200).send(`welcome to your dashboard ${ req.session.userId }`)
+})
+
+module.exports = router;
