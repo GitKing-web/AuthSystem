@@ -50,6 +50,5 @@ function HandleLogin() {
 
 LoginButton?.addEventListener('click', e => {
     e.preventDefault();
-    console.log(Logusername.value);
     HandleLogin();
 })
