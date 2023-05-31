@@ -13,12 +13,26 @@
         <h3>AuthSystem</h3>
         <button><a href="/auth/test/register">Sign up</a></button>
     </header>
-    <form>
+    <form >
+        <h2 style="text-align: center;">LOGIN</h2>
+        <div class="errmsg" style="display: none; margin: 10px;">
+            <div style="display: flex; background-color: rgb(252, 33, 33); justify-content: space-between; padding: 10px;">
+                <p><i><b>fields cannot be empty</b></i></p>
+                <button class="rem" style="cursor: pointer; width: 4%; font-size: 25px; border: none; background: transparent;">&times;</button>
+            </div>
+        </div>
+        <!-- <div class="errmsg1" style="display: none; margin: 10px;">
+            <div style="display: flex; background-color: rgb(252, 33, 33); justify-content: space-between; padding: 10px;">
+                <p class="p"><i><b>invalid username or password</b></i></p>
+                <button class="rem" style="cursor: pointer; width: 4%; font-size: 25px; border: none; background: transparent;">&times;</button>
+            </div>
+        </div> -->
         <legend>Username:</legend>
         <input type="text" class="username">
         <legend>Password:</legend>
         <input type="password" class="password">
         <button class="login">Login</button>
     </form>
+    <p class="txt">hi</p>
 </body>
 </html>

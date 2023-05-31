@@ -21,12 +21,11 @@ router.post('/register', async(req, res) => {
         password: hashedPassword,
     });
 
-    
         const saveUser = await newUser.save();
         req.session.userId = newUser.username;
         res.status(200).send(saveUser);
     } catch (error) {
-        console.log(error);
+        console.log(error._message);
         res.status(500).send('Internal Server Error');
     }
 
@@ -35,14 +34,21 @@ router.post('/register', async(req, res) => {
 router.post('/login', async(req, res) => {
     try {
         const { username, password } = req.body;
+        if(!username || username === null || password === null){
+            console.log('empty field');
+            return
+        }
         const user = await User.findOne({ username })
         if(!user){
-            res.status(401).send('Invalid Credentials');
+            res.status(401).send({message: 'Invalid Credentials'});
+            return
         }
         const isPasswordCorrect = await bcrypt.compare(password, user.password)
         if(!isPasswordCorrect){
-            res.status(401).send('Invalid Credentials');
+            res.status(401).send({message: 'Invalid Credentials'});
+            return
         }
+
         req.session.userId = user.username
         res.status(200).send('Login Successful');
         console.log(req.session);

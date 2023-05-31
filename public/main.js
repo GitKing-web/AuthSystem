@@ -4,10 +4,18 @@ const signUser = document.querySelector('.signusername');
 const email = document.querySelector('.email');
 const signPass = document.querySelector('.signpassword');
 const signupButton = document.querySelector('.signup');
+const errmsg = document.querySelector('.errmsg');
+const errmsg1 = document.querySelector('.errmsg1');
+const msg = document.querySelector('.msg');
+const rem = document.querySelector('.rem');
+
+//
+const txt = document.querySelector('.txt');
+//
 
 const Logusername = document.querySelector('.username');
 const Logpassword = document.querySelector('.password');
-const LoginButton = document.querySelector('.login')
+const LoginButton = document.querySelector('.login');
 
 
 function HandleSignup(){
@@ -29,6 +37,9 @@ function HandleSignup(){
 
 signupButton?.addEventListener('click', e => {
     e.preventDefault();
+    if(signUser.value == '' || email.value == '' || signPass.value == ''){
+        errmsg.style.display = 'block';
+    }
     HandleSignup();
 });
 
@@ -45,10 +56,22 @@ function HandleLogin() {
     })
     .then(res => res.json())
     .then(data => console.log(data))
-    .catch(error => console.log(error))
+    .catch(error => {
+        if(error){
+            console.log(error.message);
+        }
+    })
 }
 
 LoginButton?.addEventListener('click', e => {
     e.preventDefault();
+    if(Logusername.value == '' || Logpassword.value == ''){
+        errmsg.style.display = 'block'
+    }
     HandleLogin();
-})
+});
+
+rem.addEventListener('click', e => {
+    e.preventDefault();
+    errmsg.style.display = 'none';
+});

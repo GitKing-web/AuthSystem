@@ -1,5 +1,5 @@
 {
-  "name": "prank",
+  "name": "AuthSystem",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -9,7 +9,7 @@
     "dev": "nodemon server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "King Agada",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",

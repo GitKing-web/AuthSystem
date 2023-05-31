@@ -6,5 +6,35 @@
 header{
     display: flex;
     justify-content: space-between;
-    padding: 20px 10px;
+    padding: 2rem 5rem
+}
+header h3{
+    font-size: 30px;
+}
+form{
+    border: .5px solid black;
+    margin: 12px;
+    padding: 1em;
+    width: 30%;
+}
+a{
+    text-decoration: none;
+    color: #000;
+}
+input{ 
+    margin-top: .5rem;
+    padding: .23rem;
+    outline: none;
+    width: 100%;
+    border: none;
+    border-bottom: .9px solid #000;
+}
+legend{
+    margin-top: 10px;
+}
+.signup{
+    margin-top: 12px;
+    padding: .23rem;
+    width: 100%;
+    cursor:pointer ;
 }

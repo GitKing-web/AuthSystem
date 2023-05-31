@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Document</title> 
     <link rel="stylesheet" href="/css/style.css">
     <script src="/main.js" defer></script>
 </head>
@@ -13,13 +13,20 @@
         <h3>AuthSystem</h3>
         <button><a href="/auth/test/">Sign in</a></button>
     </header>
-    <form>
+    <form class="signupForm">
+        <h2 style="text-align: center;">Sign Up</h2>
+        <div class="errmsg" style="display: none; margin: 10px;">
+            <div style="display: flex; background-color: rgb(243, 72, 72); justify-content: space-between; padding: 10px;">
+                <p class="msg"><i><b></b></i></p>
+                <button class="rem" style="cursor: pointer; width: 4%; font-size: 25px; border: none; background: transparent;">&times;</button>
+            </div>
+        </div>
         <legend>Username:</legend>
         <input type="text" class="signusername">
         <legend>Email:</legend>
         <input type="email" class="email">
         <legend>Password:</legend>
-        <input type="password" class="signpassword">
+        <input type="password" class="signpassword"> <br />
         <button class="signup">signup</button>
     </form>
 
