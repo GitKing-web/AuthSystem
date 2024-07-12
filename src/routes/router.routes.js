@@ -10,13 +10,19 @@ const { helloWorld,
     getPost,
     getAllPosts,
     postUpdate,
-    deletePost
+    deletePost,
+    renderEJS
  } = require('../controllers/routes.controllers')
 
 const { tokenAuthorization, adminTokenAuthorization }= require('../middlewares/auth.middleware')
 const router = Router();
 
 //GET REQUESTS
+// render ejs routes
+router.get('/', renderEJS)
+
+
+
 router.get('/', helloWorld)
 router.get('/user/:id', adminTokenAuthorization, getUser)
 router.get('/users', adminTokenAuthorization, getAllUsers)

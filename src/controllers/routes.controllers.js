@@ -7,6 +7,15 @@ const helloWorld = (req, res) => {
     res.status(200).send('Hello, world!');
 }
 
+
+const renderEJS = (req, res) => {
+    try {
+        res.status(200).render('index', {title: 'Home page'});
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 //post request
 
 const handleSignup = async (req, res) => {
@@ -182,5 +191,6 @@ module.exports = {
     deleteUser,
     handlePost,
     postUpdate,
-    deletePost, getPost, getAllPosts
+    deletePost, getPost, getAllPosts,
+    renderEJS
 }
