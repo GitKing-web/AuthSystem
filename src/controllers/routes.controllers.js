@@ -7,13 +7,21 @@ const helloWorld = (req, res) => {
     res.status(200).send('Hello, world!');
 }
 
-
+//render ejs get req
 const renderEJS = (req, res) => {
     try {
         res.status(200).render('index', {title: 'Home page'});
     } catch (error) {
         console.log(error);
     }
+}
+
+const signUp = (req, res) => {
+    res.status(200).render('signup', {title: 'SignUp Page'});
+}
+
+const login = (req, res) => {
+    res.status(200).render('login', {title: 'Login Page'});
 }
 
 //post request
@@ -38,7 +46,7 @@ const handleSignup = async (req, res) => {
     const newUser = new User({ username, email, password: hashedPassword})
     const savedUser = await newUser.save();
 
-res.status(200).send(savedUser);
+res.status(201).send(savedUser);
 
     } catch (error) {
         return res.status(500).send('Server Error')
@@ -62,7 +70,7 @@ const handleLogin = async (req, res) => {
         const token = jwt.sign({payload, isAdmin: user.isAdmin}, process.env.jwt_secret, { expiresIn : "1h"})
 
         const { password, ...others } = user._doc;
-    return res.status(200).send({...others, token})
+    return res.status(201).send({...others, token})
     } catch (error) {
         return res.status(500).send('Server Error')
     }
@@ -192,5 +200,7 @@ module.exports = {
     handlePost,
     postUpdate,
     deletePost, getPost, getAllPosts,
-    renderEJS
+    renderEJS,
+    signUp,
+    login,
 }

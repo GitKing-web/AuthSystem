@@ -11,7 +11,9 @@ const { helloWorld,
     getAllPosts,
     postUpdate,
     deletePost,
-    renderEJS
+    renderEJS,
+    signUp,
+    login
  } = require('../controllers/routes.controllers')
 
 const { tokenAuthorization, adminTokenAuthorization }= require('../middlewares/auth.middleware')
@@ -20,7 +22,8 @@ const router = Router();
 //GET REQUESTS
 // render ejs routes
 router.get('/', renderEJS)
-
+router.get('/register', signUp)
+router.get('/login', login)
 
 
 router.get('/', helloWorld)
