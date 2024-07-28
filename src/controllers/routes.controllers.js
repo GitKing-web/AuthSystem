@@ -34,8 +34,8 @@ const handleSignup = async (req, res) => {
         //existing user
     const existingEmail = await User.findOne({ email });
     const existingUsername = await User.findOne({ username });
-    if(existingUsername) return res.status(400).send('username already in use, pick another');
-    if (existingEmail) return res.status(400).send('email already in use');
+    if(existingUsername) return res.status(400).json({ message: 'username already in use, pick another' });
+    if (existingEmail) return res.status(400).json({ message:'email already in use' });
 
     // const existingUser = await User.findOne({ username });
     // if(!existingUser) return res.status(400).send('userrname already in use, pick another');
@@ -49,7 +49,7 @@ const handleSignup = async (req, res) => {
 res.status(201).send(savedUser);
 
     } catch (error) {
-        return res.status(500).send('Server Error')
+        return res.status(500).json({ message:'Server Error', error: error.message });
         // console.log(error);
     }
 }
@@ -60,19 +60,35 @@ const handleLogin = async (req, res) => {
         const user = await User.findOne({
             $or: [{ username }, { email }]
         })
-        if (!user) return res.status(400).send('Invalid Credentials');
+        if (!user) return res.status(400).json({ message: 'Invalid Credentials' });
 
         const isPasswordCorrect = await bcrypt.compare(pass, user.password)
-        if(!isPasswordCorrect) return res.status(400).send('Invalid Credentials');
+        if(!isPasswordCorrect) return res.status(400).json({ message:'Invalid Credentials' });
            
         //jwt
         const payload = { id : user._id}
         const token = jwt.sign({payload, isAdmin: user.isAdmin}, process.env.jwt_secret, { expiresIn : "1h"})
 
         const { password, ...others } = user._doc;
-    return res.status(201).send({...others, token})
+    return res.status(200).send({...others, token})
     } catch (error) {
-        return res.status(500).send('Server Error')
+        return res.status(500).json({ message: 'Server Error', error: error.message })
+    }
+}
+
+// render Dashboard
+
+const renderDashboard =  async (req, res) => {
+    try {
+        const user = await User.findById(req.userId);
+        if(!user){
+            res.status(200).redirect('/login');
+            return;
+        }else{
+            return res.status(200).render('dashboard', {title: 'Dashboard'}, user);
+        }
+    } catch (error) {
+        return res.status(500).json({ message: 'Server error: ' + error.message });
     }
 }
 
@@ -203,4 +219,5 @@ module.exports = {
     renderEJS,
     signUp,
     login,
+    renderDashboard
 }

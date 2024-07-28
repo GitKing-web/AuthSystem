@@ -1,10 +1,9 @@
-const jwt =require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 const verifyToken =(req, res, next) => {
-    const authHeader = req.headers.token;
-    const token = authHeader.split(' ')[1];
-    if(!token || token === null) return res.status(401).send('Unable to perform request')
-    if(!authHeader) return res.status(401).send('You are not authorized')
+    const token = req.headers?.authorization;
+    console.log(token);
+    if(!token) return res.status(401).send('You are not authorized')
 
     jwt.verify(token, process.env.jwt_secret, (err, data) => {
         if(err) return res.status(403).send('Invalid token');
@@ -12,6 +11,15 @@ const verifyToken =(req, res, next) => {
         req.data = data;
         next();
     })
+}
+
+const checkUserAuthorization = (req, res, next) => {
+    verifyToken(req, res, () => {
+        const { id } = req.data.payload;
+        req.userId = id;
+        next();
+    })
+    
 }
 
 const tokenAuthorization = (req, res, next) => {
@@ -32,4 +40,4 @@ const adminTokenAuthorization = (req, res, next) => {
     })
 }
 
-module.exports = { verifyToken, tokenAuthorization, adminTokenAuthorization }
+module.exports = { verifyToken, tokenAuthorization, adminTokenAuthorization, checkUserAuthorization }

@@ -8,11 +8,14 @@
 <body>
     <div class="container">
         <form action="/login" method="post">
-            <h3>SignUp</h3>
-        <input type="text" placeholder="Enter username or email">
-        <input type="text" placeholder="Enter Password">
-        <input type="button" value="LOGIN">
+            <h3>Login</h3>
+        <input type="text" placeholder="Enter username or email" name="loginUsername" id="loginUsername">
+        <input type="text" placeholder="Enter Password" name="loginPassword" id="loginPassword">
+        <input type="button" value="LOGIN" class="loginBtn">
         </form>
     </div>
+
+    <script src="/js/main.js">
+    </script>
 </body>
 </html>
